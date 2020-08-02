@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e470e8e7-03a0-47d0-a365-4d196aee9ca8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/producer/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/producer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/producer/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1fXMrPuBPFlfRVQmK3VopYTe9rt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/producer/pkg/messenger" />
+      <recent name="$PROJECT_DIR$/producer/pkg" />
+      <recent name="$PROJECT_DIR$/producer" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="rabbitmq-golang-messaging-example" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/producer/main.go" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2760" y="560" key="#Go_Modules" timestamp="1596360290278">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2760" y="560" key="#Go_Modules/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596360290278" />
+    <state x="2610" y="505" key="EditFileWatcherDialog" timestamp="1596360341910">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2610" y="505" key="EditFileWatcherDialog/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596360341910" />
+    <state width="2518" height="419" key="GridCell.Tab.0.bottom" timestamp="1596364733650">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="419" key="GridCell.Tab.0.bottom/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596364733650" />
+    <state width="2518" height="419" key="GridCell.Tab.0.center" timestamp="1596364733649">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="419" key="GridCell.Tab.0.center/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596364733649" />
+    <state width="2518" height="419" key="GridCell.Tab.0.left" timestamp="1596364733648">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="419" key="GridCell.Tab.0.left/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596364733648" />
+    <state width="2518" height="419" key="GridCell.Tab.0.right" timestamp="1596364733650">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state width="2518" height="419" key="GridCell.Tab.0.right/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596364733650" />
+    <state x="2461" y="359" key="SettingsEditor" timestamp="1596360353143">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2461" y="359" key="SettingsEditor/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596360353143" />
+    <state x="2786" y="486" key="refactoring.ChangeSignatureDialog" timestamp="1596368065692">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2786" y="486" key="refactoring.ChangeSignatureDialog/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596368065692" />
+  </component>
+</project>

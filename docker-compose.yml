@@ -3,8 +3,15 @@ version: "3.4"
 services:
   producer:
     build: ./producer
-  consumer:
-    build: ./consumer
+    environment:
+      MQHOST: rabbitmq
+      MQPORT: 5672
+      MQUSER: rabbitmq
+      MQPASSWORD: rabbitmq
+      STRATEGY: rabbitMQ
+    depends_on:
+      - rabbitmq
+    restart: on-failure
   rabbitmq:
     image: rabbitmq:3.7-management
     container_name: rabbitmq
@@ -12,11 +19,21 @@ services:
     volumes:
       - rabbitmqdata:/var/lib/rabbitmq
     ports:
-      - "7000:15672"
-      - "7001:5672"
+      - "15672:15672"
+      - "5672:5672"
     environment:
       - RABBITMQ_DEFAULT_USER=rabbitmq
       - RABBITMQ_DEFAULT_PASS=rabbitmq
+#  consumer:
+#    build: ./consumer
+#    environment:
+#      MQHOST: rabbitmq
+#      MQPORT: 5672
+#      STRATEGY: rabbitMQ
+#    depends_on:
+#      - rabbitmq
+
+
 
 volumes:
   rabbitmqdata:
