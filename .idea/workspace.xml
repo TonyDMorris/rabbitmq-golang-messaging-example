@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e470e8e7-03a0-47d0-a365-4d196aee9ca8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/consumer/dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/consumer/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/producer/main_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consumer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/consumer/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/producer/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/producer/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/producer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/producer/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rabbitmq/dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq/dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -31,7 +31,7 @@ func main() {
 		config:          &cfg,
 		MessageConsumer: messageConsumer,
 		ConsumerFunc: func(msg string) {
-			fmt.Println(msg)
+			log.Print(fmt.Sprintf("processed %v", msg))
 		},
 	}
 

@@ -4,6 +4,7 @@ services:
   producer:
     build: ./producer
     environment:
+      EVERY_X_MILLISECONDS: 10
       MQHOST: rabbitmq
       MQPORT: 5671
       MQUSER: rabbitmq

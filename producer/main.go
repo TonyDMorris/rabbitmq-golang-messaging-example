@@ -12,11 +12,12 @@ import (
 
 // config pulled from environment variables
 type config struct {
-	MQHost     string `env:"MQHOST"`
-	MQPort     string `env:"MQPORT" `
-	Strategy   string `env:"STRATEGY"`
-	MQUser     string `env:"MQUSER"`
-	MQPassword string `env:"MQPASSWORD"`
+	MQHost             string `env:"MQHOST"`
+	MQPort             string `env:"MQPORT" `
+	Strategy           string `env:"STRATEGY"`
+	MQUser             string `env:"MQUSER"`
+	MQPassword         string `env:"MQPASSWORD"`
+	EveryXMilliseconds int64  `env:"EVERY_X_MILLISECONDS"`
 }
 
 func main() {
@@ -54,9 +55,10 @@ func (p *Producer) Run() {
 	if err != nil {
 		panic(err)
 	}
-
-	for x := range time.Tick(10 * time.Second) {
-		err = p.MessageProducer.SendMessage("test-queue", fmt.Sprintf("hello world the time is %v", x))
+	var i int
+	for range time.Tick(time.Duration(p.config.EveryXMilliseconds) * time.Millisecond) {
+		i = i + 1
+		err = p.MessageProducer.SendMessage("test-queue", fmt.Sprintf("message %v", i))
 		if err != nil {
 			panic(err)
 		}
