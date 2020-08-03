@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"github.com/caarlos0/env/v6"
 	"github.com/streadway/amqp"
@@ -31,7 +33,7 @@ func main() {
 
 	fmt.Println("messenger up and running")
 
-	err = producer.DeclareQue("test-que")
+	err = producer.DeclareQueue("test-queue")
 	if err != nil {
 		panic(err)
 	}
@@ -48,7 +50,7 @@ func main() {
 type MessageProducer interface {
 	Connect(user string, password string, host string, port string) error
 	SendMessage(que string, msg string) error
-	DeclareQue(name string) error
+	DeclareQueue(name string) error
 }
 
 func NewMessageProducer(strategy string) MessageProducer {
@@ -67,7 +69,22 @@ type RabbitMQProducer struct {
 }
 
 func (r *RabbitMQProducer) Connect(user string, password string, host string, port string) error {
-	conn, err := amqp.Dial(fmt.Sprintf("amqp://%v:%v@%v:%v", user, password, host, port))
+	cfg := new(tls.Config)
+
+	// see at the top
+	cfg.RootCAs = x509.NewCertPool()
+
+	//if ca, err := ioutil.ReadFile("testca/cacert.pem"); err == nil {
+	//	cfg.RootCAs.AppendCertsFromPEM(ca)
+	//}
+	//
+	//// Move the client cert and key to a location specific to your application
+	//// and load them here.
+	//
+	//if cert, err := tls.LoadX509KeyPair("client/cert.pem", "client/key.pem"); err == nil {
+	//	cfg.Certificates = append(cfg.Certificates, cert)
+	//}
+	conn, err := amqp.DialTLS(fmt.Sprintf("amqps://%v:%v@%v:%v/", user, password, host, port), cfg)
 	if err != nil {
 		return err
 	}
@@ -82,8 +99,8 @@ func (r *RabbitMQProducer) Connect(user string, password string, host string, po
 	return nil
 }
 
-func (r *RabbitMQProducer) DeclareQue(name string) error {
-	q, err := r.channel.QueueDeclare(
+func (r *RabbitMQProducer) DeclareQueue(name string) error {
+	_, err := r.channel.QueueDeclare(
 		name,  // name
 		false, // durable
 		false, // delete when unused

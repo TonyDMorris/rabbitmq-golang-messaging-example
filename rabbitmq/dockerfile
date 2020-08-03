@@ -1,0 +1,19 @@
+FROM rabbitmq:3.8.5-management
+
+COPY . .
+WORKDIR .
+RUN apt-get update && apt-get install make \
+    && cd tls-gen/basic \
+    && make PASSWORD=bunnies \
+    && make verify \
+    && make info \
+    && chown -R rabbitmq:rabbitmq /tls-gen \
+    && apt-get -y install ca-certificates \
+    && cp ./result/ca_certificate.pem /etc/ssl/certs \
+    && dpkg-reconfigure ca-certificates \
+    && ls -l ./result
+
+
+
+
+

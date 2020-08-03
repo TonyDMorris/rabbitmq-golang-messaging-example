@@ -12,28 +12,30 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
+
   rabbitmq:
-    image: rabbitmq:3.7-management
+    build: ./rabbitmq
     container_name: rabbitmq
     hostname: rabbitmq
     volumes:
       - rabbitmqdata:/var/lib/rabbitmq
+
     ports:
+      - "15671:15671"
       - "15672:15672"
       - "5672:5672"
+      - "5671:5671"
+      - "25672:25672"
     environment:
+      - RABBITMQ_ERLANG_COOKIE='takeMyCookies'
       - RABBITMQ_DEFAULT_USER=rabbitmq
       - RABBITMQ_DEFAULT_PASS=rabbitmq
-#  consumer:
-#    build: ./consumer
-#    environment:
-#      MQHOST: rabbitmq
-#      MQPORT: 5672
-#      STRATEGY: rabbitMQ
-#    depends_on:
-#      - rabbitmq
-
-
+      - RABBITMQ_SSL_CERTFILE=/tls-gen/basic/result/server_certificate.pem
+      - RABBITMQ_SSL_KEYFILE=/tls-gen/basic/result/server_key.pem
+      - RABBITMQ_SSL_CACERTFILE=/tls-gen/basic/result/ca_certificate.pem
+      - RABBITMQ_SSL_VERIFY=verify_peer
+      - RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT=false
 
 volumes:
   rabbitmqdata:
+
