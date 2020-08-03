@@ -119,7 +119,7 @@ func (r *RabbitMQConsumer) Connect(user string, password string, host string, po
 	return nil
 }
 
-// DeclareQueue declares the queue that the client should recceive messages from
+// DeclareQueue declares the queue that the client should receive messages from
 func (r *RabbitMQConsumer) DeclareQueue(queueName string) error {
 
 	_, err := r.channel.QueueDeclare(
