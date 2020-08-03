@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e470e8e7-03a0-47d0-a365-4d196aee9ca8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/rabbitmq/dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rabbitmq/tls-gen" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/consumer/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/producer/main_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/consumer/main.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/producer/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/producer/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/producer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/producer/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rabbitmq/dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq/dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,22 +52,32 @@
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/producer/pkg/messenger" />
       <recent name="$PROJECT_DIR$/producer/pkg" />
       <recent name="$PROJECT_DIR$/producer" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build main.go">
+  <component name="RunManager" selected="Go Test.TestRabbitMQProducer_Connect in main_test.go">
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="rabbitmq-golang-messaging-example" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/producer/main.go" />
       <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestRabbitMQProducer_Connect in main_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="rabbitmq-golang-messaging-example" />
+      <working_directory value="$PROJECT_DIR$/producer" />
+      <framework value="gotest" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/producer/main_test.go" />
+      <pattern value="^TestRabbitMQProducer_Connect$" />
       <method v="2" />
     </configuration>
     <configuration name="docker-compose.yml.rabbitmq: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
@@ -87,6 +95,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestRabbitMQProducer_Connect in main_test.go" />
         <item itemvalue="Docker.docker-compose.yml.rabbitmq: Compose Deployment" />
         <item itemvalue="Go Build.go build main.go" />
       </list>
@@ -101,30 +110,30 @@
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
     <state x="2760" y="560" key="#Go_Modules/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596360290278" />
-    <state x="2658" y="525" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1596403219430">
+    <state x="2658" y="525" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1596475378031">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
-    <state x="2658" y="525" key="#com.intellij.fileTypes.FileTypeChooser/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596403219430" />
+    <state x="2658" y="525" key="#com.intellij.fileTypes.FileTypeChooser/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596475378031" />
     <state x="2610" y="505" key="EditFileWatcherDialog" timestamp="1596360341910">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
     <state x="2610" y="505" key="EditFileWatcherDialog/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596360341910" />
-    <state width="2518" height="514" key="GridCell.Tab.0.bottom" timestamp="1596441064160">
+    <state width="2518" height="419" key="GridCell.Tab.0.bottom" timestamp="1596488316791">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="514" key="GridCell.Tab.0.bottom/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596441064160" />
-    <state width="2518" height="514" key="GridCell.Tab.0.center" timestamp="1596441064157">
+    <state width="2518" height="419" key="GridCell.Tab.0.bottom/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596488316791" />
+    <state width="2518" height="419" key="GridCell.Tab.0.center" timestamp="1596488316789">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="514" key="GridCell.Tab.0.center/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596441064157" />
-    <state width="2518" height="514" key="GridCell.Tab.0.left" timestamp="1596441064156">
+    <state width="2518" height="419" key="GridCell.Tab.0.center/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596488316789" />
+    <state width="2518" height="419" key="GridCell.Tab.0.left" timestamp="1596488316789">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="514" key="GridCell.Tab.0.left/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596441064156" />
-    <state width="2518" height="514" key="GridCell.Tab.0.right" timestamp="1596441064158">
+    <state width="2518" height="419" key="GridCell.Tab.0.left/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596488316788" />
+    <state width="2518" height="419" key="GridCell.Tab.0.right" timestamp="1596488316790">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
-    <state width="2518" height="514" key="GridCell.Tab.0.right/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596441064158" />
+    <state width="2518" height="419" key="GridCell.Tab.0.right/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596488316790" />
     <state width="2518" height="514" key="GridCell.Tab.1.bottom" timestamp="1596441064164">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
@@ -145,9 +154,13 @@
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
     <state x="2461" y="359" key="SettingsEditor/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596360353143" />
-    <state x="2786" y="486" key="refactoring.ChangeSignatureDialog" timestamp="1596397025115">
+    <state x="2719" y="556" key="com.goide.refactor.extractInterface.GoExtractInterfaceDialog" timestamp="1596485636899">
       <screen x="1680" y="0" width="2560" height="1440" />
     </state>
-    <state x="2786" y="486" key="refactoring.ChangeSignatureDialog/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596397025115" />
+    <state x="2719" y="556" key="com.goide.refactor.extractInterface.GoExtractInterfaceDialog/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596485636899" />
+    <state x="2786" y="486" key="refactoring.ChangeSignatureDialog" timestamp="1596486388277">
+      <screen x="1680" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2786" y="486" key="refactoring.ChangeSignatureDialog/1680.0.2560.1440/0.0.1680.1050@1680.0.2560.1440" timestamp="1596486388277" />
   </component>
 </project>

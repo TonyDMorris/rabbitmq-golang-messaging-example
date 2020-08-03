@@ -7,7 +7,7 @@ import (
 	"github.com/caarlos0/env/v6"
 	"github.com/streadway/amqp"
 	"io/ioutil"
-	"time"
+	"log"
 )
 
 // config pulled from environment variables
@@ -26,68 +26,67 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
-	messageProducer := NewMessageProducer(cfg.Strategy)
-	producer := Producer{
+	messageConsumer := NewMessageConsumer(cfg.Strategy)
+	consumer := Consumer{
 		config:          &cfg,
-		MessageProducer: messageProducer,
+		MessageConsumer: messageConsumer,
+		ConsumerFunc: func(msg string) {
+			fmt.Println(msg)
+		},
 	}
 
-	producer.Run()
-
+	consumer.Run()
 }
 
-type Producer struct {
+type Consumer struct {
 	config          *config
-	MessageProducer MessageProducer
+	MessageConsumer MessageConsumer
+	ConsumerFunc    func(msg string)
 }
 
-func (p *Producer) Run() {
-	err := p.MessageProducer.Connect(p.config.MQUser, p.config.MQPassword, p.config.MQHost, p.config.MQPort)
+func (c *Consumer) Run() {
+	err := c.MessageConsumer.Connect(c.config.MQUser, c.config.MQPassword, c.config.MQHost, c.config.MQPort)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println("messenger up and running")
+	fmt.Println("consumer up and running")
 
-	err = p.MessageProducer.DeclareQueue("test-queue")
+	err = c.MessageConsumer.DeclareQueue("test-queue")
 	if err != nil {
 		panic(err)
 	}
 
-	for x := range time.Tick(10 * time.Second) {
-		err = p.MessageProducer.SendMessage("test-queue", fmt.Sprintf("hello world the time is %v", x))
-		if err != nil {
-			panic(err)
-		}
-	}
+	log.Fatal(c.MessageConsumer.ConsumeMessagesFromQueue("test-queue", c.ConsumerFunc))
+
 }
 
-// MessageProducer is the interface which controls connecting to a message broker , declaring a queue, and finally sending messages
-type MessageProducer interface {
+// MessageConsumer is the interface which controls connecting to a message broker, joining a queue as a consumer, and ultimately consuming messages
+type MessageConsumer interface {
 	Connect(user string, password string, host string, port string) error
-	SendMessage(queue string, msg string) error
 	DeclareQueue(queueName string) error
+	ConsumeMessagesFromQueue(queueName string, fn func(msg string)) error
 }
 
-func NewMessageProducer(strategy string) MessageProducer {
+func NewMessageConsumer(strategy string) MessageConsumer {
+
 	// strategy allows for other messaging solutions to be implemented
-	producers := map[string]func() MessageProducer{}
+	consumers := map[string]func() MessageConsumer{}
 
-	producers["rabbitMQ"] = newRabbitMQProducer
+	consumers["rabbitMQ"] = newRabbitMQConsumer
 
-	return producers[strategy]()
+	return consumers[strategy]()
 
 }
 
-// RabbitMQProducer is the concrete implementation used it holds connection info, and channel info
-type RabbitMQProducer struct {
+// RabbitMQConsumer is the concrete implementation used it holds connection info, channel info, and implements the MessageConsumer interface
+type RabbitMQConsumer struct {
 	connection *amqp.Connection
 	channel    *amqp.Channel
 }
 
 // Connect connects to the rabbitMQ instance
-func (r *RabbitMQProducer) Connect(user string, password string, host string, port string) error {
+func (r *RabbitMQConsumer) Connect(user string, password string, host string, port string) error {
 	// generate a new tls config
 	cfg := new(tls.Config)
 	// InsecureSkipVerify allows the connection to succeed even when the certificate is signed by a bad authority
@@ -116,11 +115,12 @@ func (r *RabbitMQProducer) Connect(user string, password string, host string, po
 	}
 	r.channel = ch
 
-	fmt.Print("[*] Connected sending messages.")
+	fmt.Print("connected to rabbitMQ")
 	return nil
 }
 
-func (r *RabbitMQProducer) DeclareQueue(queueName string) error {
+// DeclareQueue declares the queue that the client should recceive messages from
+func (r *RabbitMQConsumer) DeclareQueue(queueName string) error {
 
 	_, err := r.channel.QueueDeclare(
 		queueName, // name
@@ -137,19 +137,30 @@ func (r *RabbitMQProducer) DeclareQueue(queueName string) error {
 	return nil
 }
 
-func (r *RabbitMQProducer) SendMessage(queue string, msg string) error {
-	err := r.channel.Publish(
-		"",    // exchange
-		queue, // routing key
-		false, // mandatory
-		false, // immediate
-		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        []byte(msg),
-		})
-	return err
+// ConsumeMessagesFromQueue takes a simple function and executes it with each message body within a goroutine
+func (r *RabbitMQConsumer) ConsumeMessagesFromQueue(queueName string, fn func(msg string)) error {
+	msgs, err := r.channel.Consume(
+		queueName, // queue
+		"",        // consumer
+		true,      // auto-ack
+		false,     // exclusive
+		false,     // no-local
+		false,     // no-wait
+		nil,       // args
+	)
+	if err != nil {
+		return err
+	}
+	forever := make(chan bool)
+	go func() {
+		for d := range msgs {
+			go fn(string(d.Body))
+		}
+	}()
+	log.Printf(" [*] Waiting for messages.")
+	<-forever
+	return nil
 }
-
-func newRabbitMQProducer() MessageProducer {
-	return &RabbitMQProducer{}
+func newRabbitMQConsumer() MessageConsumer {
+	return &RabbitMQConsumer{}
 }
