@@ -1,4 +1,4 @@
-module rabbitmq-golang-messaging-example/producer
+module github.com/rabbitmq-golang-messaging-example/producer
 
 go 1.13
 

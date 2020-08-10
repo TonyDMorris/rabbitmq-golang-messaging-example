@@ -1,80 +1,24 @@
-package main
+package message
 
 import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"github.com/caarlos0/env/v6"
-	"github.com/streadway/amqp"
 	"io/ioutil"
-	"time"
+
+	"github.com/streadway/amqp"
 )
 
-// config pulled from environment variables
-type config struct {
-	MQHost             string `env:"MQHOST"`
-	MQPort             string `env:"MQPORT" `
-	Strategy           string `env:"STRATEGY"`
-	MQUser             string `env:"MQUSER"`
-	MQPassword         string `env:"MQPASSWORD"`
-	EveryXMilliseconds int64  `env:"EVERY_X_MILLISECONDS"`
-}
-
-func main() {
-
-	cfg := config{}
-	err := env.Parse(&cfg)
-	if err != nil {
-		panic(err)
-	}
-
-	messageProducer := NewMessageProducer(cfg.Strategy)
-	producer := Producer{
-		config:          &cfg,
-		MessageProducer: messageProducer,
-	}
-
-	producer.Run()
-
-}
-
-type Producer struct {
-	config          *config
-	MessageProducer MessageProducer
-}
-
-func (p *Producer) Run() {
-	err := p.MessageProducer.Connect(p.config.MQUser, p.config.MQPassword, p.config.MQHost, p.config.MQPort)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("messenger up and running")
-
-	err = p.MessageProducer.DeclareQueue("test-queue")
-	if err != nil {
-		panic(err)
-	}
-	var i int
-	for range time.Tick(time.Duration(p.config.EveryXMilliseconds) * time.Millisecond) {
-		i = i + 1
-		err = p.MessageProducer.SendMessage("test-queue", fmt.Sprintf("message %v", i))
-		if err != nil {
-			panic(err)
-		}
-	}
-}
-
-// MessageProducer is the interface which controls connecting to a message broker , declaring a queue, and finally sending messages
-type MessageProducer interface {
+// Producer is the interface which controls connecting to a message broker , declaring a queue, and finally sending messages
+type Producer interface {
 	Connect(user string, password string, host string, port string) error
 	SendMessage(queue string, msg string) error
 	DeclareQueue(queueName string) error
 }
 
-func NewMessageProducer(strategy string) MessageProducer {
+func NewMessageProducer(strategy string) Producer {
 	// strategy allows for other messaging solutions to be implemented
-	producers := map[string]func() MessageProducer{}
+	producers := map[string]func() Producer{}
 
 	producers["rabbitMQ"] = newRabbitMQProducer
 
@@ -152,6 +96,6 @@ func (r *RabbitMQProducer) SendMessage(queue string, msg string) error {
 	return err
 }
 
-func newRabbitMQProducer() MessageProducer {
+func newRabbitMQProducer() Producer {
 	return &RabbitMQProducer{}
 }
