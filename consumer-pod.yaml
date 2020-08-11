@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: consumer
+  name: consumer
+spec:
+  containers:
+    - env:
+        - name: MQHOST
+          value: rabbitmq
+        - name: MQPASSWORD
+          value: rabbitmq
+        - name: MQPORT
+          value: "5671"
+        - name: MQUSER
+          value: rabbitmq
+        - name: STRATEGY
+          value: rabbitMQ
+      image: tonehmorris/rabbitmq-golang-demo:consumer
+      name: consumer
+      resources: {}
+  restartPolicy: OnFailure
+status: {}

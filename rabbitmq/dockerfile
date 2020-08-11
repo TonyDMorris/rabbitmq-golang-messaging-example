@@ -1,7 +1,15 @@
 FROM rabbitmq:3.8.5-management
-
+ENV RABBITMQ_ERLANG_COOKIE='takeMyCookies'
+ENV RABBITMQ_DEFAULT_USER=rabbitmq
+ENV RABBITMQ_DEFAULT_PASS=rabbitmq
+ENV RABBITMQ_SSL_CERTFILE=/tls-gen/basic/result/server_certificate.pem
+ENV RABBITMQ_SSL_KEYFILE=/tls-gen/basic/result/server_key.pem
+ENV RABBITMQ_SSL_CACERTFILE=/tls-gen/basic/result/ca_certificate.pem
+ENV RABBITMQ_SSL_VERIFY=verify_none
+ENV RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT=false
 COPY . .
 WORKDIR .
+
 RUN apt-get update && apt-get install make \
     && cd tls-gen/basic \
     && make PASSWORD=bunnies CN=rabbitmq \

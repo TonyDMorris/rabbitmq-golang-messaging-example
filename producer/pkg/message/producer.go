@@ -20,7 +20,7 @@ func NewMessageProducer(strategy string) Producer {
 	// strategy allows for other messaging solutions to be implemented
 	producers := map[string]func() Producer{}
 
-	producers["rabbitMQ"] = newRabbitMQProducer
+	producers["rabbitMQ"] = NewRabbitMQProducer
 
 	return producers[strategy]()
 
@@ -96,6 +96,6 @@ func (r *RabbitMQProducer) SendMessage(queue string, msg string) error {
 	return err
 }
 
-func newRabbitMQProducer() Producer {
+func NewRabbitMQProducer() Producer {
 	return &RabbitMQProducer{}
 }

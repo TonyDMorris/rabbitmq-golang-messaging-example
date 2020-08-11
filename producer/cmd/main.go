@@ -16,7 +16,7 @@ func main() {
 
 	messageProducer := message.NewMessageProducer(cfg.Strategy)
 	producer := app.App{
-
+		Config:          &cfg,
 		MessageProducer: messageProducer,
 	}
 
