@@ -1,77 +1,27 @@
-package main
+package message
 
 import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"github.com/caarlos0/env/v6"
-	"github.com/streadway/amqp"
 	"io/ioutil"
 	"log"
+
+	"github.com/streadway/amqp"
 )
 
-// config pulled from environment variables
-type config struct {
-	MQHost     string `env:"MQHOST"`
-	MQPort     string `env:"MQPORT" `
-	Strategy   string `env:"STRATEGY"`
-	MQUser     string `env:"MQUSER"`
-	MQPassword string `env:"MQPASSWORD"`
-}
+type MessageHandler func(string)
 
-func main() {
-
-	cfg := config{}
-	err := env.Parse(&cfg)
-	if err != nil {
-		panic(err)
-	}
-	messageConsumer := NewMessageConsumer(cfg.Strategy)
-	consumer := Consumer{
-		config:          &cfg,
-		MessageConsumer: messageConsumer,
-		ConsumerFunc: func(msg string) {
-			log.Print(fmt.Sprintf("processed %v", msg))
-		},
-	}
-
-	consumer.Run()
-}
-
-type Consumer struct {
-	config          *config
-	MessageConsumer MessageConsumer
-	ConsumerFunc    func(msg string)
-}
-
-func (c *Consumer) Run() {
-	err := c.MessageConsumer.Connect(c.config.MQUser, c.config.MQPassword, c.config.MQHost, c.config.MQPort)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("consumer up and running")
-
-	err = c.MessageConsumer.DeclareQueue("test-queue")
-	if err != nil {
-		panic(err)
-	}
-
-	log.Fatal(c.MessageConsumer.ConsumeMessagesFromQueue("test-queue", c.ConsumerFunc))
-
-}
-
-// MessageConsumer is the interface which controls connecting to a message broker, joining a queue as a consumer, and ultimately consuming messages
-type MessageConsumer interface {
+type Consumer interface {
 	Connect(user string, password string, host string, port string) error
 	DeclareQueue(queueName string) error
-	ConsumeMessagesFromQueue(queueName string, fn func(msg string)) error
+	ConsumeMessagesFromQueue(queueName string, fn MessageHandler) error
 }
 
-func NewMessageConsumer(strategy string) MessageConsumer {
+func NewMessageConsumer(strategy string) Consumer {
 
 	// strategy allows for other messaging solutions to be implemented
-	consumers := map[string]func() MessageConsumer{}
+	consumers := map[string]func() Consumer{}
 
 	consumers["rabbitMQ"] = newRabbitMQConsumer
 
@@ -138,7 +88,7 @@ func (r *RabbitMQConsumer) DeclareQueue(queueName string) error {
 }
 
 // ConsumeMessagesFromQueue takes a simple function and executes it with each message body within a goroutine
-func (r *RabbitMQConsumer) ConsumeMessagesFromQueue(queueName string, fn func(msg string)) error {
+func (r *RabbitMQConsumer) ConsumeMessagesFromQueue(queueName string, fn MessageHandler) error {
 	msgs, err := r.channel.Consume(
 		queueName, // queue
 		"",        // consumer
@@ -161,6 +111,6 @@ func (r *RabbitMQConsumer) ConsumeMessagesFromQueue(queueName string, fn func(ms
 	<-forever
 	return nil
 }
-func newRabbitMQConsumer() MessageConsumer {
+func newRabbitMQConsumer() Consumer {
 	return &RabbitMQConsumer{}
 }

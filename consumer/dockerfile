@@ -6,6 +6,6 @@ ENV STRATEGY=rabbitMQ
 RUN mkdir /app
 ADD . /app/
 WORKDIR /app
-RUN go build -o main .
+RUN go build cmd/main.go 
 
 ENTRYPOINT ["./main"]
