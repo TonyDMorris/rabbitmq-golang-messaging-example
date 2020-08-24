@@ -30,8 +30,8 @@ func NewHub() *Hub {
 	}
 }
 
-// serveWs handles websocket requests from the peer.
-func (h *Hub) serveWs(w http.ResponseWriter, r *http.Request) {
+// ServeWs handles websocket requests from the peer.
+func (h *Hub) ServeWs(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)

@@ -16,9 +16,12 @@ type App struct {
 	Hub             *hub.Hub
 }
 
-func (c *App) Route() {
-	c.Router.GET("/", func(c *gin.Context) {
+func (a *App) Route() {
+	a.Router.GET("/", func(c *gin.Context) {
 		c.String(200, "We got Gin")
+	})
+	a.Router.GET("/ws", func(c *gin.Context) {
+		a.Hub.ServeWs(c.Writer, c.Request)
 	})
 
 }
@@ -34,7 +37,7 @@ func (c *App) Run() {
 	if err != nil {
 		panic(err)
 	}
-
+	c.Route()
 	go log.Fatal(c.MessageConsumer.ConsumeMessagesFromQueue("test-queue", c.Hub.HandleStandardMessage))
-	go log.Fatal(c.Router.Run())
+	go log.Fatal(c.Router.Run(":9090"))
 }
