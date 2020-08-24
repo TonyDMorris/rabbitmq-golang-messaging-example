@@ -3,11 +3,19 @@ package message
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 
 	"github.com/streadway/amqp"
 )
+
+type standardMessage struct {
+	XMLName xml.Name `xml:"email"`
+	Title   string   `xml:"title"`
+	Body    string   `xml:"body"`
+	Comment string   `xml:",comment"`
+}
 
 // Producer is the interface which controls connecting to a message broker , declaring a queue, and finally sending messages
 type Producer interface {
@@ -84,14 +92,19 @@ func (r *RabbitMQProducer) DeclareQueue(queueName string) error {
 }
 
 func (r *RabbitMQProducer) SendMessage(queue string, msg string) error {
-	err := r.channel.Publish(
+	stdMsg := &standardMessage{Body: msg, Title: "train update"}
+	output, err := xml.MarshalIndent(stdMsg, "  ", "    ")
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+	}
+	err = r.channel.Publish(
 		"",    // exchange
 		queue, // routing key
 		false, // mandatory
 		false, // immediate
 		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        []byte(msg),
+			ContentType: "text/xml",
+			Body:        output,
 		})
 	return err
 }

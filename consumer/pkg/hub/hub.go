@@ -1,13 +1,20 @@
 package hub
 
 import (
-	"encoding/json"
+	"encoding/xml"
+	"fmt"
 	"log"
 	"net/http"
 )
 
 // Hub maintains the set of active clients and broadcasts messages to the
 // clients.
+type standardMessage struct {
+	XMLName xml.Name `xml:"email"`
+	Title   string   `xml:"title"`
+	Body    string   `xml:"body"`
+	Comment string   `xml:",comment"`
+}
 type Hub struct {
 	clients map[*Client]bool
 }
@@ -62,14 +69,14 @@ func (h *Hub) broadcast(msg []byte) {
 	}
 }
 
-func (h *Hub) HandleEvenNumbers(b []byte) {
-	var msg NumberMessage
-	err := json.Unmarshal(b, &msg)
+func (h *Hub) HandleStandardMessage(b []byte) {
+	var msg standardMessage
+
+	err := xml.Unmarshal(b, &msg)
+
 	if err != nil {
 		log.Print("error unmarshaling message")
 	} else {
-		if msg.Number%2 == 0 {
-			h.broadcast(b)
-		}
+		fmt.Print(msg.Body)
 	}
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-type MessageHandler func(string)
+type MessageHandler func([]byte)
 
 type Consumer interface {
 	Connect(user string, password string, host string, port string) error
@@ -104,7 +104,7 @@ func (r *RabbitMQConsumer) ConsumeMessagesFromQueue(queueName string, fn Message
 	forever := make(chan bool)
 	go func() {
 		for d := range msgs {
-			go fn(string(d.Body))
+			go fn(d.Body)
 		}
 	}()
 	log.Printf(" [*] Waiting for messages.")

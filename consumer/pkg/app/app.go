@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"log"
+	"rabbitmq-golang-messaging-example/consumer/pkg/hub"
 	"rabbitmq-golang-messaging-example/consumer/pkg/message"
 
 	"github.com/gin-gonic/gin"
@@ -12,6 +13,7 @@ type App struct {
 	Config          *Config
 	MessageConsumer message.Consumer
 	Router          *gin.Engine
+	Hub             *hub.Hub
 }
 
 func (c *App) Route() {
@@ -33,6 +35,6 @@ func (c *App) Run() {
 		panic(err)
 	}
 
-	go log.Fatal(c.MessageConsumer.ConsumeMessagesFromQueue("test-queue", func(msg string) { fmt.Println(msg) }))
+	go log.Fatal(c.MessageConsumer.ConsumeMessagesFromQueue("test-queue", c.Hub.HandleStandardMessage))
 	go log.Fatal(c.Router.Run())
 }

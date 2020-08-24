@@ -9,7 +9,7 @@ spec:
   containers:
     - env:
         - name: EVERY_X_MILLISECONDS
-          value: "100"
+          value: "2000"
         - name: MQHOST
           value: rabbitmq
         - name: MQPASSWORD
