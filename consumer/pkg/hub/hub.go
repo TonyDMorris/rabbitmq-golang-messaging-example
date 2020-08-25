@@ -2,9 +2,10 @@ package hub
 
 import (
 	"encoding/xml"
-	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/websocket"
 )
 
 // Hub maintains the set of active clients and broadcasts messages to the
@@ -21,6 +22,14 @@ type Hub struct {
 
 type NumberMessage struct {
 	Number int `json:"number"`
+}
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
 }
 
 func NewHub() *Hub {
@@ -77,6 +86,7 @@ func (h *Hub) HandleStandardMessage(b []byte) {
 	if err != nil {
 		log.Print("error unmarshaling message")
 	} else {
-		fmt.Print(msg.Body)
+		h.broadcast(b)
+		log.Print(msg.Body)
 	}
 }

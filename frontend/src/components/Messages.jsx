@@ -6,29 +6,30 @@ import styled from "styled-components";
 const Messages = () => {
   const { addToast } = useToasts();
 
-  const ws = new WebSocket("ws://localhost:3000/ws");
-  ws.onopen = () => {
-    // on connecting, do nothing but log it to the console
-    addToast("connected");
-  };
+  const ws = new WebSocket("ws://localhost:80/ws");
 
-  ws.onmessage = (evt) => {
-    // listen to data sent from the websocket server
-    const message = JSON.parse(evt.data);
+  useEffect(() => {
+    ws.onopen = () => {
+      // on connecting, do nothing but log it to the console
+      addToast("connected", { appearance: "success" });
+    };
 
-    addToast(message);
-  };
+    ws.onmessage = (evt) => {
+      // listen to data sent from the websocket server
 
-  ws.onclose = () => {
-    addToast("disconnected");
-  };
+      addToast(evt.data, { appearance: "success" });
+    };
+
+    ws.onclose = () => {
+      addToast("disconnected");
+    };
+  }, []);
 
   return <Container>hello</Container>;
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
 `;
 
 export default Messages;

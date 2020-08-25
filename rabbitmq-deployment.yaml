@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: ingress-nginx
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml
     kompose.version: 1.21.0 (992df58d8)

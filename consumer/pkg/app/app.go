@@ -24,6 +24,7 @@ func (a *App) Route() {
 		a.Hub.ServeWs(c.Writer, c.Request)
 	})
 	go log.Fatal(a.Router.Run(":9090"))
+
 }
 func (a *App) Run() {
 	err := a.MessageConsumer.Connect(a.Config.MQUser, a.Config.MQPassword, a.Config.MQHost, a.Config.MQPort)
