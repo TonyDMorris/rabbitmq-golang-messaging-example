@@ -25,8 +25,6 @@ func main() {
 		Router:          r,
 		Hub:             h,
 	}
-
+	consumer.Route()
 	consumer.Run()
 }
-
-// MessageConsumer is the interface which controls connecting to a message broker, joining a queue as a consumer, and ultimately consuming messages

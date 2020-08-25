@@ -23,21 +23,21 @@ func (a *App) Route() {
 	a.Router.GET("/ws", func(c *gin.Context) {
 		a.Hub.ServeWs(c.Writer, c.Request)
 	})
-
+	go log.Fatal(a.Router.Run(":9090"))
 }
-func (c *App) Run() {
-	err := c.MessageConsumer.Connect(c.Config.MQUser, c.Config.MQPassword, c.Config.MQHost, c.Config.MQPort)
+func (a *App) Run() {
+	err := a.MessageConsumer.Connect(a.Config.MQUser, a.Config.MQPassword, a.Config.MQHost, a.Config.MQPort)
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println("consumer up and running")
 
-	err = c.MessageConsumer.DeclareQueue("test-queue")
+	err := a.MessageConsumer.DeclareQueue("test-queue")
 	if err != nil {
 		panic(err)
 	}
-	c.Route()
-	go log.Fatal(c.MessageConsumer.ConsumeMessagesFromQueue("test-queue", c.Hub.HandleStandardMessage))
-	go log.Fatal(c.Router.Run(":9090"))
+
+	go log.Fatal(a.MessageConsumer.ConsumeMessagesFromQueue("test-queue", a.Hub.HandleStandardMessage))
+
 }

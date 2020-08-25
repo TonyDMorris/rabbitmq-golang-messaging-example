@@ -1,7 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: consumer
+  namespace: ingress-nginx
 spec:
   selector:
     matchLabels:
@@ -12,7 +14,8 @@ spec:
         app: consumer
     spec:
       containers:
-        - env:
+        - name: consumer
+          env:
             - name: MQHOST
               value: rabbitmq
             - name: MQPASSWORD
@@ -23,13 +26,13 @@ spec:
               value: rabbitmq
             - name: STRATEGY
               value: rabbitMQ
-            - name: consumer
+
           image: tonehmorris/rabbitmq-golang-demo:consumer
           imagePullPolicy: "Always"
-          name: consumer
           ports:
             - containerPort: 9090
           resources: {}
+
       restartPolicy: Always
 
 status: {}
