@@ -33,7 +33,7 @@ func (a *App) Run() {
 
 	fmt.Println("consumer up and running")
 
-	err := a.MessageConsumer.DeclareQueue("test-queue")
+	err = a.MessageConsumer.DeclareQueue("test-queue")
 	if err != nil {
 		panic(err)
 	}

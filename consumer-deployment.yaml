@@ -3,7 +3,7 @@ kind: Deployment
 
 metadata:
   name: consumer
-  namespace: ingress-nginx
+
 spec:
   selector:
     matchLabels:
@@ -13,6 +13,7 @@ spec:
       labels:
         app: consumer
     spec:
+      hostname: consumer
       containers:
         - name: consumer
           env:
@@ -31,6 +32,7 @@ spec:
           imagePullPolicy: "Always"
           ports:
             - containerPort: 9090
+
           resources: {}
 
       restartPolicy: Always
