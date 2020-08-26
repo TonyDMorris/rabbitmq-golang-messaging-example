@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: consumer
+
+spec:
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      hostname: consumer
+      containers:
+        - name: consumer
+          env:
+            - name: MQHOST
+              value: rabbitmq
+            - name: MQPASSWORD
+              value: rabbitmq
+            - name: MQPORT
+              value: "5671"
+            - name: MQUSER
+              value: rabbitmq
+            - name: STRATEGY
+              value: rabbitMQ
+
+          image: tonehmorris/rabbitmq-golang-demo:consumer
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 9090
+
+          resources: {}
+
+      restartPolicy: Always
+
+status: {}

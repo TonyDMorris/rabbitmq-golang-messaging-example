@@ -1,0 +1,27 @@
+#
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: test-ingress
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`localhost`) && PathPrefix(`/consumer`)
+      kind: Rule
+      services:
+        - name: consumer-service
+          port: 9090
+      middlewares:
+        - name: consumer-stripprefix
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: consumer-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /consumer
