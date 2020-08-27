@@ -1,5 +1,6 @@
 package main
 
+// adding commet to trigger github action
 import (
 	"rabbitmq-golang-messaging-example/consumer/pkg/app"
 	"rabbitmq-golang-messaging-example/consumer/pkg/hub"
