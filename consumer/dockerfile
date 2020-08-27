@@ -1,8 +1,8 @@
 FROM golang:alpine
-ENV MQPORT=5671
-ENV MQUSER=rabbitmq
-ENV MQPASSWORD=rabbitmq
-ENV STRATEGY=rabbitMQ
+# ENV MQPORT=5671
+# ENV MQUSER=rabbitmq
+# ENV MQPASSWORD=rabbitmq
+# ENV STRATEGY=rabbitMQ
 RUN mkdir /app
 ADD . /app/
 WORKDIR /app
