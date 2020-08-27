@@ -1,0 +1,21 @@
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "consumer/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          dockerfile: ./consumer/dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: tonehmorris/rabbitmq-golang-demo
+          tags: consumer
