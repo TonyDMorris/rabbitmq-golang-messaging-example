@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: consumer
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: consumer
+          env:
+            - name: MQHOST
+              value: rabbitmq
+            - name: MQPASSWORD
+              value: rabbitmq
+            - name: MQPORT
+              value: "5671"
+            - name: MQUSER
+              value: rabbitmq
+            - name: STRATEGY
+              value: rabbitMQ

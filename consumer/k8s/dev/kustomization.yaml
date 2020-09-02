@@ -1,0 +1,10 @@
+namePrefix: dev-
+commonLabels:
+  variant: dev
+
+commonAnnotations:
+  note: Hello, I am dev!
+bases:
+  - ../base
+patchesStrategicMerge:
+  - deployment.yaml

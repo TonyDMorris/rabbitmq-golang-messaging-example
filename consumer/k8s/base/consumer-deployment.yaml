@@ -16,17 +16,6 @@ spec:
       hostname: consumer
       containers:
         - name: consumer
-          env:
-            - name: MQHOST
-              value: rabbitmq
-            - name: MQPASSWORD
-              value: rabbitmq
-            - name: MQPORT
-              value: "5671"
-            - name: MQUSER
-              value: rabbitmq
-            - name: STRATEGY
-              value: rabbitMQ
 
           image: tonehmorris/rabbitmq-golang-demo:consumer
           imagePullPolicy: "Always"
